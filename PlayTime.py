@@ -19,11 +19,13 @@ client = commands.Bot(command_prefix = prefix)
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
+
 @client.event
 async def on_guild_join(guild):
     general = find(lambda x: x.name == 'general',  guild.text_channels)
     if general and general.permissions_for(guild.me).send_messages:
         await general.send('Hello ' + guild.name + ' call me by : ' + prefix)
+
 
 @client.command(
     name = "hello",
@@ -37,9 +39,9 @@ async def hello(ctx):
 @client.command(
     name = "storyTime",
     help = "nothing to see here",
-    brief = "start a story of 3 steps"
+    brief = "start a story where You are the hero"
 )
-async def storyTime(ctx):
+async def storyTime(ctx, arg):
     await ctx.channel.send("It's story time then...\nN'oublie pas il faut juste repondre un chiffre")
     pannels = []
     author = ctx.author
@@ -56,12 +58,13 @@ async def storyTime(ctx):
     def check(m):
         return m.author == author
 
-    with open("pannels.json", "r") as pannelson:
-        data = json.load(pannelson)
-        for pannel in data["pannel"]:
-            pannels.append(Pannel(pannel["choices"], pannel["content"]))
+    with open("storys.json", "r") as pannelson:
+        data = json.load( pannelson )
+        for story in data[ "story" ]:
+            if story["name"] == arg:
+                for pannel in story["pannel"]:
+                    pannels.append( Pannel( pannel["choices"], pannel["content"] ) )
     
-
     curent = pannels[0]
     
     while curent.end != True:
@@ -70,7 +73,7 @@ async def storyTime(ctx):
         curent = pannels[ curent.choices[ int(msg.content) - 1 ] ]
     
     await ctx.channel.send(curent.__str__())
-    await ctx.channel.send("merci d'avoir joué cette histoire interactive")
+    await ctx.channel.send("Merci d'avoir joue cette histoire interactive")
 
 
 client.run(token)
