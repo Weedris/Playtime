@@ -71,7 +71,7 @@ async def storyTime(ctx, arg):
     while curent.end != True:
         await ctx.channel.send(curent.__str__())
         msg = await client.wait_for('message', check = check)
-        curent = panel[ curent.choices[ int(msg.content) - 1 ] ]
+        curent = panels[ curent.choices[ int(msg.content) - 1 ] ]
     
     await ctx.channel.send(curent.__str__())
     await ctx.channel.send("Merci d'avoir joue cette histoire interactive")
