@@ -1,0 +1,55 @@
+{
+    "stories" : [
+        {
+            "name": "test",
+            "panel": [
+                {
+                    "content": "*TEST* Vous allez etes une merde, Vous pouvez aller au nord ou au sud ou aller vous ?\n1: Nord\n2: Sud",
+                    "choices": [2, 3]
+                },
+                {
+                    "content": "Vous allez de retour au debut de votre aventure, Vous pouvez aller au nord ou au sud ou aller vous ?\n1: Nord\n2: Sud",
+                    "choices": [2, 3]
+                },
+                {
+                    "content": "Vers le Nord vous dicidames. Un peu plus tard vous appercevez un truc au loin.\n1: Ce rapprochez\n2: Faire demis-tour",
+                    "choices": [4, 1]
+                },
+                {
+                    "content": "Vers le Sud vous dicidames. Apres une longue avance la lumiere est de plus en plus diffuse, jusqu'a completement disparaitre. Puis, plus rien...",
+                    "choices": []
+                },
+                {
+                    "content": "Vous venez de trouvez l'Ocean... Il est beau, Il est splendide, Il est...",
+                    "choices": []
+                }
+            ]
+        },
+        {
+            "name": "test2",
+            "panel":[
+                {
+                    "content": "*TEST2* Vous etes une merde, Vous pouvez aller au nord ou au sud ou aller vous ?\n1: Nord\n2: Sud",
+                    "choices": [2, 3]
+                },
+                {
+                    "content": "Vous allez de retour au debut de votre aventure, Vous pouvez aller au nord ou au sud ou aller vous ?\n1: Nord\n2: Sud",
+                    "choices": [2, 3]
+                },
+                {
+                    "content": "Vers le Nord vous dicidames. Un peu plus tard vous appercevez un truc au loin.\n1: Ce rapprochez\n2: Faire demis-tour",
+                    "choices": [4, 1]
+                },
+                {
+                    "content": "Vers le Sud vous dicidames. Apres une longue avancé la lumiere est de plus en plus diffuse, jusqu'a completement disparaitre. Puis, plus rien...",
+                    "choices": []
+                },
+                {
+                    "content": "Vous venez de trouvez l'Ocean... Il est beau, Il est splendide, Il est...",
+                    "choices": []
+                }
+            ]
+        }
+    ]
+    
+}
