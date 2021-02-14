@@ -6,7 +6,7 @@ from discord.utils import find
 
 
 # Get configuration.json
-with open("configuration.json", "r") as config:
+with open("config.json", "r") as config:
     data = json.load(config)
     token = data["token"]
     prefix = data["prefix"]
@@ -39,15 +39,15 @@ async def hello(ctx):
 
 @client.command(
     name = "storyTime",
-    help = "nothing to see here",
-    brief = "start a story where You are the hero"
+    help = "write !pt storyTime 'nom d'histoire', afin de commencer une histoire interactive",
+    brief = "start a stories where You are the hero"
 )
 async def storyTime(ctx, arg):
-    await ctx.channel.send("It's story time then...\nN'oublie pas il faut juste repondre un chiffre")
-    pannels = []
+    await ctx.channel.send("It's stories time then...\nN'oublie pas il faut juste repondre un chiffre")
+    panels = []
     author = ctx.author
 
-    class Pannel:
+    class Panel:
         def __init__(self, choices, content):
             self.choices = choices
             self.content = content
@@ -59,19 +59,19 @@ async def storyTime(ctx, arg):
     def check(m):
         return m.author == author
 
-    with open("storys.json", "r") as pannelson:
+    with open("stories.json", "r") as pannelson:
         data = json.load( pannelson )
-        for story in data[ "story" ]:
+        for story in data[ "stories" ]:
             if story["name"] == arg:
-                for pannel in story["pannel"]:
-                    pannels.append( Pannel( pannel["choices"], pannel["content"] ) )
+                for panel in story["panel"]:
+                    panels.append( Panel( panel["choices"], panel["content"] ) )
     
-    curent = pannels[0]
+    curent = panels[0]
     
     while curent.end != True:
         await ctx.channel.send(curent.__str__())
         msg = await client.wait_for('message', check = check)
-        curent = pannels[ curent.choices[ int(msg.content) - 1 ] ]
+        curent = panel[ curent.choices[ int(msg.content) - 1 ] ]
     
     await ctx.channel.send(curent.__str__())
     await ctx.channel.send("Merci d'avoir joue cette histoire interactive")
