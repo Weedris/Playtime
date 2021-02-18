@@ -49,7 +49,7 @@ async def storyList(ctx):
         for story in data[ "stories" ]:
             out += " - " + story ["name"] + "\n"
     
-    await ctx.channel.send("```" + "Voici la liste des histoires disponnible" + out + "```")
+    await ctx.channel.send("```" + "Voici la liste des histoires disponnible\n" + out + "```")
 
 
 @client.command(
