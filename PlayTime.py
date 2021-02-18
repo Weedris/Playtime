@@ -38,6 +38,21 @@ async def hello(ctx):
 
 
 @client.command(
+    name = "storyList",
+    help = "Send the list of the stories available",
+    brief = "Send the list of the stories available"
+)
+async def storyList(ctx):
+    out = ""
+    with open("stories.json", "r") as pannelson:
+        data = json.load( pannelson )
+        for story in data[ "stories" ]:
+            out += " - " + story ["name"] + "\n"
+    
+    await ctx.channel.send("```" + "Voici la liste des histoires disponnible" + out + "```")
+
+
+@client.command(
     name = "storyTime",
     help = "write !pt storyTime 'nom d'histoire', afin de commencer une histoire interactive",
     brief = "start a stories where You are the hero"
