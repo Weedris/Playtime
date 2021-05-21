@@ -28,6 +28,7 @@ async def on_guild_join(guild):
         await general.send('Hello ' + guild.name + ' call me by : ' + prefix)
 
 
+#-----------------------------------------------------------------------------
 @client.command(
     name = "hello",
     help = "Really ? You want more info ? For that ?",
@@ -37,6 +38,7 @@ async def hello(ctx):
     await ctx.reply("Hello !")
 
 
+#-----------------------------------------------------------------------------
 @client.command(
     name = "storyList",
     help = "Send the list of the stories available",
@@ -52,6 +54,7 @@ async def storyList(ctx):
     await ctx.channel.send("```" + "Voici la liste des histoires disponnible\n" + out + "```")
 
 
+#-----------------------------------------------------------------------------
 @client.command(
     name = "storyTime",
     help = "write !pt storyTime 'nom d'histoire', afin de commencer une histoire interactive",
