@@ -121,7 +121,7 @@ async def tikTakToe(ctx):
         return m.author == author
 
     # send the board into the channel where the game is held
-    def sendBoard():
+    async def sendBoard():
         out = ""
         for line in gameBoard:
             for element in line:
@@ -134,7 +134,7 @@ async def tikTakToe(ctx):
                     out += "O"
                 
             out += "\n"
-        ctx.channel.send(out)
+        await ctx.channel.send(out)
     
     # play the play from the player return true -> it went fine
     def play(player, x, y):
