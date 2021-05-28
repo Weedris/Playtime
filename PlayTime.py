@@ -18,7 +18,7 @@ client = commands.Bot(command_prefix = prefix)
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity = discord.Game( name = "https://github.com/Weedris/Playtime" ) )
+    await client.change_presence(activity = discord.Game( name = "Type : .pt help" ) )
     print('We have logged in as {0.user}'.format(client))
 
 
@@ -111,8 +111,12 @@ async def tikTakToe(ctx, arg):
         [ 0, 0, 0]
     ]
 
-    starter = random.randint(0, 1)
+    starter = random.randint(1, 2)
     player = starter
+
+    # check if the player is the same as the original author
+    def check(m):
+        return m.author == author
 
     # send the board inhto the channel where the game is held
     def sendBoard(board):
@@ -139,6 +143,10 @@ async def tikTakToe(ctx, arg):
             return False
     
     # verify if someone win the game or if the game is a draw
+    # return 1 if player 1 won
+    # return 2 if player 2 won
+    # return 3 if it's a draw
+    # return 0 if the game is still running
     def verify():
         
         # check lines
@@ -190,9 +198,67 @@ async def tikTakToe(ctx, arg):
     
     # random play from the bot
     def playFromBot():
-        pass
+        x = random.randint(1, 3)
+        y = random.randint(1, 3)
+        while not play(1, x, y):
+            x = random.randint(1, 3)
+            y = random.randint(1, 3)
+
+        return 0
     
+    # main game loop
     while verify == 0:
-        pass
+        if player == 1:
+            good = False 
+            while not good:
+                if playFromBot() == 0:
+                    good = True
+            
+            player = 2
+        
+        else :
+            sendBoard()
+            await ctx.channel.send( "Merci de répondre les coordonées de votre emplacement de jeu séparer ^par une virgule (genre : '2,3'), vous êtes : O." )
+            msg = await client.wait_for('message', check = check)
+
+            while not play(2, msg[0], msg[2]):
+                await ctx.channel.send( "Coordonées invalide" )
+                msg = await client.wait_for('message', check = check)
+
+            sendBoard()     
+            
+            player = 1
+    
+    if verify() == 1:
+        await ctx.channel.send( "Bravo vous avez perdu !" )
+    elif verify() == 2:
+        await ctx.channel.send( "Bravo vous avez Gagnez !" )
+    elif verify() == 3:
+        await ctx.channel.send( "Bravo vous avez fait une égalité !" )
+
+#-----------------------------------------------------------------------------
+@client.command(
+    name = "suggestGame",
+    help = "The bot suggest you a game to play with our friends (doesn't provide the friends).",
+    brief = "The bot suggest you a game to play with our friends (doesn't provide the friends)."
+)
+async def suggestGame(ctx):
+    gameList = [
+        "le Ptit Bac",
+        "Among us",
+        "Agar.io",
+        "Biscotte",
+        "skribbl.io",
+        "Gartic Phone",
+        "Chepa demerdez vous"
+    ]
+
+    catchPhrases = [
+        "Un petit : ",
+        "Pourquoi pas : ",
+        "Test ça : "
+    ]
+    
+    await ctx.channel.send( random.choice(catchPhrases) + random.choice(gameList) )
 
 client.run(token)
