@@ -130,7 +130,7 @@ async def tikTakToe(ctx):
                     out += " "
                 elif element == "1":
                     out += "X"
-                else:
+                elif element == "2":
                     out += "O"
                 
             out += "\n"
@@ -212,6 +212,7 @@ async def tikTakToe(ctx):
     while verify() == 0:
 
         print("loop ", player)
+        print("game Board", gameBoard)
 
         if player == 1:
             good = False 
