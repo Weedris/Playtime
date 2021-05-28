@@ -114,6 +114,8 @@ async def tikTakToe(ctx):
     starter = random.randint(1, 2)
     player = starter
 
+    print("player is ", player)
+
     # check if the player is the same as the original author
     def check(m):
         return m.author == author
@@ -207,7 +209,7 @@ async def tikTakToe(ctx):
         return 0
     
     # main game loop
-    while verify == 0:
+    while verify() == 0:
 
         print("loop " + player)
 
