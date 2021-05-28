@@ -101,7 +101,7 @@ async def storyTime(ctx, arg):
     help = "The bot play a game of TikTakToe against you, to play just enter the coordinate of your move.",
     brief = "The bot play a game of TikTakToe against you."
 )
-async def tikTakToe(ctx, arg):
+async def tikTakToe(ctx):
     await ctx.channel.send("Let's play a little game together")
     author = ctx.author
 
