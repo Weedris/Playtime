@@ -208,6 +208,9 @@ async def tikTakToe(ctx):
     
     # main game loop
     while verify == 0:
+
+        print("loop " + player)
+
         if player == 1:
             good = False 
             while not good:
