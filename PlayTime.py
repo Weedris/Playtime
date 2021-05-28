@@ -227,7 +227,7 @@ async def tikTakToe(ctx):
             await ctx.channel.send( "Merci de répondre les coordonées de votre emplacement de jeu séparer ^par une virgule (genre : '2,3'), vous êtes : O." )
             msg = await client.wait_for('message', check = check)
 
-            while not play(2, msg.content[0], msg.content[2]):
+            while not play(2, int( msg.content[0] ), int( msg.content[2] ) ):
                 await ctx.channel.send( "Coordonées invalide" )
                 msg = await client.wait_for('message', check = check)
 
