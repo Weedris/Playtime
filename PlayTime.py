@@ -126,11 +126,11 @@ async def tikTakToe(ctx):
         for line in gameBoard:
             for element in line:
                 out += " | "
-                if element == "0":
+                if element == 0:
                     out += " "
-                elif element == "1":
+                elif element == 1:
                     out += "X"
-                elif element == "2":
+                elif element == 2:
                     out += "O"
                 
             out += "\n"
