@@ -219,13 +219,14 @@ async def tikTakToe(ctx):
             while not good:
                 if playFromBot() == 0:
                     good = True
+
+            await ctx.channel.send( sendBoard() )
             
             player = 2
         
         else :
-            await ctx.channel.send( sendBoard() )
 
-            await ctx.channel.send( "Merci de répondre les coordonées de votre emplacement de jeu séparer ^par une virgule (genre : '2,3'), vous êtes : O." )
+            await ctx.channel.send( "Merci d'envoyé les coordonées de votre emplacement de jeu séparer ^par une virgule (genre : '2,3'), vous êtes : O." )
             msg = await client.wait_for('message', check = check)
 
             while not play(2, int( msg.content[0] ), int( msg.content[2] ) ):
