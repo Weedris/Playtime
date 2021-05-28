@@ -121,7 +121,7 @@ async def tikTakToe(ctx):
         return m.author == author
 
     # send the board into the channel where the game is held
-    async def sendBoard():
+    def sendBoard():
         out = ""
         for line in gameBoard:
             for element in line:
@@ -134,7 +134,7 @@ async def tikTakToe(ctx):
                     out += "O"
                 
             out += "\n"
-        await ctx.channel.send(out)
+        return out
     
     # play the play from the player return true -> it went fine
     def play(player, x, y):
@@ -222,7 +222,8 @@ async def tikTakToe(ctx):
             player = 2
         
         else :
-            sendBoard()
+            await ctx.channel.send( sendBoard() )
+
             await ctx.channel.send( "Merci de répondre les coordonées de votre emplacement de jeu séparer ^par une virgule (genre : '2,3'), vous êtes : O." )
             msg = await client.wait_for('message', check = check)
 
@@ -230,7 +231,7 @@ async def tikTakToe(ctx):
                 await ctx.channel.send( "Coordonées invalide" )
                 msg = await client.wait_for('message', check = check)
 
-            sendBoard()     
+            await ctx.channel.send( sendBoard() )     
             
             player = 1
     
