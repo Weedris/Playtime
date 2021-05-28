@@ -120,10 +120,10 @@ async def tikTakToe(ctx):
     def check(m):
         return m.author == author
 
-    # send the board inhto the channel where the game is held
-    def sendBoard(board):
+    # send the board into the channel where the game is held
+    def sendBoard():
         out = ""
-        for line in board:
+        for line in gameBoard:
             for element in line:
                 out += " | "
                 if element == "0":
