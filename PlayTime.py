@@ -125,7 +125,7 @@ async def tikTakToe(ctx):
             for element in line:
                 out += " | "
                 if element == 0:
-                    out += " "
+                    out += " # "
                 elif element == 1:
                     out += "X"
                 elif element == 2:
