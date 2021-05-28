@@ -138,8 +138,8 @@ async def tikTakToe(ctx):
     
     # play the play from the player return true -> it went fine
     def play(player, x, y):
-        if gameBoard[ x - 1, y - 1 ] == 0:
-            gameBoard[ x - 1, y - 1 ] = player
+        if gameBoard[ x - 1][ y - 1 ] == 0:
+            gameBoard[ x - 1][ y - 1 ] = player
             return True
         else:
             return False
