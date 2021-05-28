@@ -127,9 +127,9 @@ async def tikTakToe(ctx):
                 if element == 0:
                     out += " # "
                 elif element == 1:
-                    out += "X"
+                    out += " X "
                 elif element == 2:
-                    out += "O"
+                    out += " O "
                 
             out += "\n"
         return out
@@ -174,7 +174,7 @@ async def tikTakToe(ctx):
             for column in range( len( gameBoard[0] ) ):
                 if line == column:
                     diags[ 0 ].append( gameBoard[ line ][ column ] )
-                elif line + column == 2:
+                if line + column == 2:
                     diags[ 1 ].append( gameBoard[ line ][ column ] )
         
         for diag in diags:
