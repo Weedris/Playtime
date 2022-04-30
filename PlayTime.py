@@ -62,11 +62,12 @@ async def storyList(ctx):
     brief = "start a stories where You are the hero."
 )
 async def storyTime(ctx, arg):
-    await ctx.channel.send("It's stories time then...\nN'oublie pas il faut juste repondre un chiffre")
+    await ctx.reply("It's stories time then...\nN'oublie pas il faut juste repondre un chiffre",  mention_author = False )
     panels = []
     author = ctx.author
+    players = dict()
 
-    class Panel:
+    class Panel :
         def __init__(self, choices, content):
             self.choices = choices
             self.content = content
@@ -78,22 +79,90 @@ async def storyTime(ctx, arg):
     def check(m):
         return m.author == author
 
-    with open("stories.json", "r") as pannelson:
+    with open( "Stories.json", "r" ) as pannelson :
         data = json.load( pannelson )
-        for story in data[ "stories" ]:
-            if story[ "name" ] == arg:
-                for panel in story[ "panel" ]:
+        for story in data[ "stories" ] :
+            if story[ "name" ] == arg :
+                for panel in story[ "panel" ] :
                     panels.append( Panel( panel[ "choices" ], panel[ "content" ] ) )
     
-    curent = panels[0]
+    with open( "Players.json", "r" ) as playerSon :
+        players = json.load( playerSon )
     
-    while curent.end != True:
-        await ctx.channel.send(curent.__str__())
-        msg = await client.wait_for('message', check = check)
-        curent = panels[ curent.choices[ int(msg.content) - 1 ] ]
+    foundIt = False
+
+    for player in players :
+        if player == author.name :
+            for game in players[player] :
+                if game[ 0 ] == arg :
+
+                    foundIt = True
+
+                    await ctx.reply( "Would you like to resume your stories ? : y / n" )
+
+                    msg = await client.wait_for( 'message', check = check )
+
+                    if msg.content.lower() == "n" :
+                        current = panels[ 0 ]
+                        lastChoice = 0
+                        players[ author.name ].remove( [ arg, game[ 1 ] ] )
+                    
+                    elif msg.content.lower() == "y" :
+                        current = panels[ game[ 1 ] ]
+                        lastChoice = game[ 1 ]
     
-    await ctx.channel.send(curent.__str__())
-    await ctx.channel.send("Merci d'avoir joue cette histoire interactive")
+                else :
+                    current = panels[ 0 ]
+                    lastChoice = 0
+
+    if not foundIt :
+        current = panels[ 0 ]
+        lastChoice = 0
+
+    stop = False
+    
+    await ctx.reply( current.__str__() )
+    while not current.end and not stop :
+        msg = await client.wait_for( 'message', check = check )
+
+        if msg.content == "stop" :
+            await ctx.reply( "Sauvegarde de votre progression..." )
+
+            if author.name in players :
+                players[ author.name ].append( ( arg, lastChoice ) )
+
+            else :
+                players[ author.name ] = [ ( arg, lastChoice ) ]
+
+            with open( "Players.json", "w" ) as data :
+                json.dump( players, data, indent = 4 )
+            
+            await ctx.reply( "Sauvegarde affectué à bientôt !" )
+
+            stop = True
+        
+        elif msg.content.isdigit() :
+            lastChoice = current.choices[ int(msg.content) - 1 ]
+            current = panels[ current.choices[ int(msg.content) - 1 ] ]
+            await ctx.reply( current.__str__() )
+        
+        elif msg.content == "help" :
+            await ctx.reply( "```Write :\n   - help : receive this messages\n    - stop : Sauvegarde de votre progression et mise en pause de votre partie\n - je sait pas quoi encore```" )
+
+        else :
+            await ctx.reply( "I don't understand what you're saying, you have to answer by a `number`, `help`" )
+
+    if current.end:
+        with open( "Players.json", "r+" ) as data :
+            d = json.load( data )
+            for a in d:
+                if a == author.name:
+                    for c in d[a]:
+                        if c[0] == arg:
+                            print("c'est la")
+
+    await ctx.reply( "Merci d'avoir joué cette histoire interactive" )
+        
 
 #-----------------------------------------------------------------------------
 @client.command(
@@ -102,7 +171,7 @@ async def storyTime(ctx, arg):
     brief = "The bot play a game of TikTakToe against you."
 )
 async def tikTakToe(ctx):
-    await ctx.channel.send("Let's play a little game together")
+    await ctx.channel.send( "Let's play a little game together" )
     author = ctx.author
 
     gameBoard = [
@@ -111,7 +180,7 @@ async def tikTakToe(ctx):
         [ 0, 0, 0]
     ]
 
-    starter = random.randint(1, 2)
+    starter = random.randint( 1, 2 )
     player = starter
 
     # check if the player is the same as the original author
@@ -185,7 +254,7 @@ async def tikTakToe(ctx):
         
         # check if draw
         draw = True
-        for line in range( len(gameBoard) ):
+        for line in range( len( gameBoard) ):
             for column in range( len( gameBoard[0] ) ):
                 if gameBoard[ line ][ column ] == 0:
                     draw = False
@@ -198,11 +267,11 @@ async def tikTakToe(ctx):
     
     # random play from the bot
     def playFromBot():
-        x = random.randint(1, 3)
-        y = random.randint(1, 3)
-        while not play(1, x, y):
-            x = random.randint(1, 3)
-            y = random.randint(1, 3)
+        x = random.randint( 1, 3 )
+        y = random.randint( 1, 3 )
+        while not play( 1, x, y ):
+            x = random.randint( 1, 3 )
+            y = random.randint( 1, 3 )
 
         return 0
     
